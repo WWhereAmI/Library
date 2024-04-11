@@ -9,12 +9,10 @@ namespace Library.Models
 
         public int BookId { get; set; }
 
-        public BookStatus Status { get; set; }
-
         public int ClientId { get; set; }
 
-        public DateTime Took { get; set; }
+        public string Book { get; set; }    
 
-        public DateTime Returned { get; set; }
+        public string Client {  get; set; } 
     }
 }

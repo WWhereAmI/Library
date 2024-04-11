@@ -1,0 +1,73 @@
+﻿@{
+    ViewBag.Title = "Клиенты";
+}
+<main aria-labelledby="title">
+    <h2 id="title">@ViewBag.Title.</h2>
+    <h3>@ViewBag.Message</h3>
+
+</main>
+
+<div class="container mt-4">
+    <table id="clientTable" class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Имя</th>
+                <th>Фамилия</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+<button id="addClientBtn" class="btn btn-primary">Добавить клиента</button>
+
+<div id="editContainer"></div>
+
+<script>
+
+    function redrawClientTable() {
+        $.ajax({
+            url: '/Client/GetClients',
+            method: 'GET',
+            success: function (data) {
+                $('#clientTable tbody').empty();
+                $.each(data, function (index, client) {
+                    $('#clientTable tbody').append(`
+                        <tr>
+                            <td>${client.Id}</td>
+                            <td>${client.Name}</td>
+                            <td>${client.Family}</td>
+                        </tr>
+                    `);
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error(status, error);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        redrawClientTable();
+
+        $('#addClientBtn').click(function () {
+
+            $.ajax({
+                url: '/Client/AddClient',
+                method: 'GET',
+                success: function (data) {
+
+                    $("#editContainer").html(data)
+
+                },
+                error: function (xhr, status, error) {
+                    console.error(status, error);
+                }
+            });
+
+            redrawClientTable();
+        });
+    });
+</script>
+

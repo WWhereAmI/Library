@@ -2,7 +2,7 @@
 {
     public enum BookStatus
     {
-        Took,
-        Returned,    
+        NotAvailable,
+        InStock,    
     }
 }

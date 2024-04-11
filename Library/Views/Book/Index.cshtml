@@ -1,0 +1,99 @@
+﻿@using Library.Const
+
+@{
+    ViewBag.Title = "Книги";
+}
+<main aria-labelledby="title">
+    <h2 id="title">@ViewBag.Title.</h2>
+    <h3>@ViewBag.Message</h3>
+
+</main>
+
+<div class="container mt-4">
+    <table id="bookTable" class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Название</th>
+                <th>Описание</th>
+                <th>Автор</th>
+                <th>В наличии</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+<button id="addBookBtn" class="btn btn-primary">Добавить книгу</button>
+
+<div id="editContainer"></div>
+
+<script>
+
+    function redrawBookTable() {
+        $.ajax({
+            url: '/Book/GetBooks',
+            method: 'GET',
+            success: function (data) {
+                $('#bookTable tbody').empty();
+                $.each(data, function (index, book) {
+                    $('#bookTable tbody').append(`
+                        <tr>
+                            <td>${book.Id}</td>
+                            <td>${book.Title}</td>
+                            <td>${book.Description}</td>
+                            <td>${book.Author}</td>
+                            <td>${book.Status == @((int)BookStatus.InStock) ? 'Да' : 'Нет'}</td>
+                            <td><button class="btn btn-primary editBtn" data-id="${book.Id}">E</button></td>
+                        </tr>
+                    `);
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error(status, error);
+            }
+        });
+    }
+
+    function editBook(bookId) {
+        $.ajax({
+            url: '/Book/EditDescription',
+            method: 'GET',
+            data: { id: bookId },
+            success: function (data) {
+                $("#editContainer").html(data);
+            },
+            error: function (xhr, status, error) {
+                console.error(status, error);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        redrawBookTable();
+
+        $('#addBookBtn').click(function () {
+
+            $.ajax({
+                url: '/Book/AddBook',
+                method: 'GET',
+                success: function (data) {
+
+                    $("#editContainer").html(data)
+
+                },
+                error: function (xhr, status, error) {
+                    console.error(status, error);
+                }
+            });
+
+            redrawBookTable();
+        });
+
+        $(document).on('click', '.editBtn', function () {
+            var bookId = $(this).data('id');
+            editBook(bookId);
+        });
+    });
+</script>
+

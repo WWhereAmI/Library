@@ -5,18 +5,16 @@ using System.Web;
 
 namespace Library.DataAccess
 {
-    interface IRepository<T> : IDisposable 
+    public interface IRepository<T> : IDisposable 
         where T : class
     {
         IEnumerable<T> GetAll();
         T Find(int id);
 
-        void Add(T entity);
+        int Add(T entity);
 
         void Update(T entity);
 
-        void Delete(T entity);
-
-        void Save();
+        void Delete(int id);
     }
 }

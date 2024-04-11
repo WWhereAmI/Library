@@ -1,0 +1,74 @@
+﻿@model Library.ViewModels.BookAuditVm.BookTransitionVm
+
+
+<div>
+    @using (Html.BeginRouteForm("Default", new { controller = "BookAudit", httproute = "true" }, FormMethod.Post, new { @class = "form-horizontal module-body", role = "form", id = "book-issuance-form" }))
+    {
+        if (ViewBag.Action == "PostBookIssuance")
+        {
+            <div class="form-group">
+                <div class="col-sm-12">
+                    @Html.LabelFor(e => e.BookId)
+                    @Html.DropDownListFor(e => e.BookId, Model.BookSelectList, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-12">
+                    @Html.LabelFor(e => e.ClientId)
+                    @Html.DropDownListFor(e => e.ClientId, Model.ClientSelectList, new { @class = "form-control" })
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="form-group">
+                <div class="col-sm-12">
+                    @Html.LabelFor(e => e.Id)
+                    @Html.DropDownListFor(e => e.Id, Model.BookSelectList, new { @class = "form-control" })
+                </div>
+            </div>
+        }
+
+        <div class="form-group">
+            <div class="col-sm-12">
+                <button type="submit" class="btn btn-danger">Выдать книгу</button>
+            </div>
+        </div>
+    }
+</div>
+
+<script>
+    (function () {
+        'use strict';
+
+        $(document).ready(function () {
+            $('#book-issuance-form').submit(function (event) {
+                event.preventDefault()
+                var formData = $(this).serialize();
+
+                $.ajax({
+                    url: '/BookAudit/@ViewBag.Action',
+                    method: 'POST',
+                    data: formData,
+                    success: function () {
+
+                        redrawBookAuditTable();
+
+                        $("#editContainer").empty();
+
+                    },
+                    error: function (xhr, status, error) {
+
+                        console.error(xhr, status, error);
+                    }
+                });
+            });
+        });
+
+    })();
+</script>
+
+
+
+

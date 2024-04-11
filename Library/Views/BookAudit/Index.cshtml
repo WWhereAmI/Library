@@ -1,0 +1,94 @@
+﻿@{
+    ViewBag.Title = "Аудит книг";
+}
+<main aria-labelledby="title">
+    <h2 id="title">@ViewBag.Title.</h2>
+    <h3>@ViewBag.Message</h3>
+
+</main>
+
+<div class="container mt-4">
+    <table id="bookAuditTable" class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Книга</th>
+                <th>Клиент</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+<button id="issuanceBtn" class="btn btn-primary">Выдать книгу</button>
+<button id="returnBtn" class="btn btn-primary">Вернуть книгу</button>
+
+<div id="editContainer"></div>
+
+<script>
+
+    function redrawBookAuditTable() {
+        $.ajax({
+            url: '/BookAudit/GetBookAudits',
+            method: 'GET',
+            success: function (data) {
+                $('#bookAuditTable tbody').empty();
+                $.each(data, function (index, bookAudit) {
+                    $('#bookAuditTable tbody').append(`
+                        <tr>
+                            <td>${bookAudit.Id}</td>
+                            <td>${bookAudit.Book}</td>
+                            <td>${bookAudit.Client}</td>
+                        </tr>
+                    `);
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error(status, error);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        redrawBookAuditTable();
+
+        $('#issuanceBtn').click(function () {
+
+            $.ajax({
+                url: '/BookAudit/BookIssuance',
+                method: 'GET',
+                success: function (data) {
+
+                    $("#editContainer").html(data)
+
+                },
+                error: function (xhr, status, error) {
+                    console.error(status, error);
+                }
+            });
+
+            redrawBookAuditTable();
+        });
+
+
+        $('#returnBtn').click(function () {
+
+            $.ajax({
+                url: '/BookAudit/BookReturn',
+                method: 'GET',
+                success: function (data) {
+
+                    $("#editContainer").html(data)
+
+                },
+                error: function (xhr, status, error) {
+                    console.error(status, error);
+                }
+            });
+
+            redrawBookAuditTable();
+        });
+    });
+</script>
+
