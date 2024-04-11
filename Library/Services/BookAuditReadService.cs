@@ -37,7 +37,7 @@ namespace Library.Services
             {
                 ClientSelectList = _clientRepository.GetAll().Select(e => new SelectListItem()
                 {
-                    Text = e.Name + e.Family,
+                    Text = e.Name + " " +  e.Family,
                     Value = e.Id.ToString(),
                     Selected = true
                 }),

@@ -19,7 +19,7 @@ namespace Library.Services
 
         public void IssuanceBook(BookTransitionVm vm)
         {
-            ChangeStatus(vm.BookId);
+            ChangeStatus(vm.BookId.Value);
 
             base.Add(vm);
         }

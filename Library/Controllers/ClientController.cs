@@ -37,7 +37,11 @@ namespace Library.Controllers
         [HttpPost]
         public ActionResult PostAdd(ClientAddVm vm)
         {
-            _clientEdiService.Add(vm);
+            if (ModelState.IsValid)
+            {
+                _clientEdiService.Add(vm);
+            }
+
             return RedirectToAction("Index");
         }
     }

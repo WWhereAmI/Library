@@ -41,7 +41,10 @@ namespace Library.Controllers
         [HttpPost]
         public ActionResult PostBookIssuance(BookTransitionVm vm)
         {
-            _bookAuditEditService.IssuanceBook(vm);
+            if (ModelState.IsValid)
+            {
+                _bookAuditEditService.IssuanceBook(vm);
+            }
             return RedirectToAction("Index");
         }
 
@@ -58,7 +61,11 @@ namespace Library.Controllers
         [HttpPost]
         public ActionResult PostBookReturn(BookTransitionVm vm)
         {
-            _bookAuditEditService.ReturnBook(vm);
+            if (ModelState.IsValid)
+            {
+                _bookAuditEditService.ReturnBook(vm);
+            }
+
             return RedirectToAction("Index");
         }
 

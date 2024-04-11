@@ -11,10 +11,12 @@ namespace Library.ViewModels.BookAuditVm
         public int Id { get; set; }
 
         [Display(Name = "Книга")]
-        public int BookId { get; set; }
+        [Required]
+        public int? BookId { get; set; }
 
         [Display(Name = "Клиент")]
-        public int ClientId { get; set; }
+        [Required]
+        public int? ClientId { get; set; }
 
         public IEnumerable<SelectListItem> BookSelectList { get; set; }
 

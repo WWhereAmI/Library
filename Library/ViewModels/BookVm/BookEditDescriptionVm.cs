@@ -8,6 +8,7 @@ namespace Library.ViewModels.BookVm
         public int Id { get; set; }
 
         [Display(Name = "Описание")]
+        [Required]
         public string Description { get; set; }
     }
 }

@@ -35,9 +35,14 @@ namespace Library.Controllers
 
         [HttpPost]
         public ActionResult PostAdd(BookAddVm vm)
-        {      
-            _bookEdiService.Add(vm);
-            return RedirectToAction("Index");         
+        {
+            if (ModelState.IsValid)
+            {
+                _bookEdiService.Add(vm);           
+            }
+
+            return RedirectToAction("Index");
+
         }
 
 
@@ -51,7 +56,11 @@ namespace Library.Controllers
         [HttpPost]
         public ActionResult PutEditDescription(BookEditDescriptionVm vm)
         {
-            _bookEdiService.Change(vm);
+
+            if (ModelState.IsValid)
+            {
+                _bookEdiService.Change(vm);
+            }           
 
             return RedirectToAction("Index");
         }

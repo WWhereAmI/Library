@@ -9,9 +9,11 @@ namespace Library.ViewModels.ClientVm
         public int Id { get; set; }
 
         [Display(Name = "Имя")]
+        [Required]
         public string Name { get; set; }
 
         [Display(Name = "Фамилия")]
+        [Required]
         public string Family { get; set; }
 
     }
