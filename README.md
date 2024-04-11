@@ -14,6 +14,6 @@ ASP.Net MVC Framework 4.7.2.
 jquery + Js Front
 СУБД Sqlite без ORM
 
-App_start -> Library.db - файл базы данных
+App_data -> Library.db - файл базы данных
 
 
